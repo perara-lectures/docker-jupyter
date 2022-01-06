@@ -1,0 +1,6 @@
+mathjax
+jupyter_contrib_nbextensions
+ray[rllib]
+tensorflow
+gym
+RISE
