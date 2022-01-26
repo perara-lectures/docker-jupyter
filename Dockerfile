@@ -1,8 +1,9 @@
-FROM ubuntu:20.04
+FROM ubuntu:22.04
 MAINTAINER Per-Arne Arndersen <per@sysx.no>
 ENV TZ=Europe/Oslo
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
-ADD requirements.txt /opt/requirements.txt
+
+
 RUN apt-get update && apt-get install -y \
     aufs-tools \
     automake \
@@ -12,11 +13,14 @@ RUN apt-get update && apt-get install -y \
     python3-dev \
     cmake \
     libjs-mathjax \
-    python3-notebook jupyter jupyter-core \
     curl \
     git \
  && rm -rf /var/lib/apt/lists/*
+
+
 RUN pip3 install --upgrade pip
+
+COPY requirements.txt /opt/requirements.txt
 RUN /usr/bin/python3 -m pip install -r /opt/requirements.txt
 
 # install a collection of extensions
@@ -29,5 +33,5 @@ RUN pip3 install git+https://github.com/uclmr/egal.git
 RUN jupyter nbextension install --py  egal
 RUN jupyter nbextension enable --py egal
 ADD run.sh /opt/run.sh
-RUN chmod 777 /opt/run.sh
+RUN chmod +x /opt/run.sh
 CMD ["/bin/bash", "/opt/run.sh"]

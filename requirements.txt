@@ -1,5 +1,5 @@
 mathjax
-pip install notebook==5.7.13
+notebook==5.7.13
 jupyter_contrib_nbextensions
 ray[rllib]
 tensorflow
